@@ -3,293 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flash Words MVP</title>
-    <style>
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        max-width: 600px;
-        margin: 40px auto;
-        padding: 0 20px;
-        color: #333;
-      }
-      header {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-      section {
-        background: #f9f9f9;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 25px;
-      }
-      form div {
-        margin-bottom: 12px;
-      }
-      label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 4px;
-      }
-      input[type="text"] {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-      button {
-        cursor: pointer;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        font-weight: 600;
-      }
-      #btn-submit-word {
-        background-color: #007bff;
-        color: white;
-      }
-      #btn-show-meaning {
-        background-color: #6c757d;
-        color: white;
-        margin-top: 10px;
-      }
-      #btn-remembered {
-        background-color: #28a745;
-        color: white;
-      }
-      #btn-forgot {
-        background-color: #dc3545;
-        color: white;
-      }
-      .actions-container {
-        margin-top: 15px;
-        display: flex;
-        gap: 10px;
-      }
-      .hide {
-        display: none !important;
-      }
-    </style>
+    <title>Document</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <h1>Flash Words</h1>
+      <section id="left-side-container">
+        <img src="./images/logo.jpg" />
+        <div>
+          <h3 id="title">Smart Flashcards</h3>
+          <small>Spaced-repetition vocabulary</small>
+        </div>
+      </section>
+
+      <section id="right-side-container">
+        <div id="status">
+          <img src="icon" />
+          <span id="day streak">0</span> day streak
+        </div>
+      </section>
     </header>
 
     <main>
-      <!-- Add Word Form Section -->
-      <section class="add-word-section">
-        <h2>Add New Word</h2>
-        <form id="form-add-word">
-          <div>
-            <label for="input-word">Word:</label>
-            <input
-              type="text"
-              id="input-word"
-              name="word"
-              required
-              placeholder="e.g. Eloquent"
-            />
-          </div>
-
-          <div>
-            <label for="input-meaning">Meaning:</label>
-            <input
-              type="text"
-              id="input-meaning"
-              name="meaning"
-              required
-              placeholder="e.g. فصيح أو بليغ"
-            />
-          </div>
-
-          <div>
-            <label for="input-description">Description / Example:</label>
-            <input
-              type="text"
-              id="input-description"
-              name="description"
-              placeholder="e.g. An eloquent speaker."
-            />
-          </div>
-
-          <button type="submit" id="btn-submit-word">Add Word</button>
-        </form>
+      <section class="status-container">
+        <div class="stataus-details-container">
+          <h3 class="word-number" style="color: blue">0</h3>
+          <p class="desc">words due</p>
+        </div>
+        <div class="stataus-details-container">
+          <h3 class="word-number" style="color: black">0</h3>
+          <p class="total">Total words</p>
+        </div>
+        <div class="stataus-details-container">
+          <h3 class="word-number" style="color: green">0</h3>
+          <p class="mastered">Mastered</p>
+        </div>
+        <div class="stataus-details-container">
+          <h3 class="word-number" style="color: red">0</h3>
+          <p class="day-streak">Day streak</p>
+        </div>
       </section>
 
-      <!-- Flashcard Review Section -->
-      <section class="flashcard-section" id="flashcard-section">
-        <h2>Review Today</h2>
-        <h3 id="card-word">Loading...</h3>
-        <p id="card-meaning" class="hide"></p>
-        <p id="card-description" class="hide"></p>
-
-        <button type="button" id="btn-show-meaning">Show Meaning</button>
-
-        <div id="review-actions-container" class="actions-container hide">
-          <button type="button" id="btn-remembered">I Remembered</button>
-          <button type="button" id="btn-forgot">I Forgot</button>
+      <section class="review-container">
+        <div class="card no-word-review">
+          <img src="./images/all-done.png" alt="" />
+          <h3>You're all caught up</h3>
+          <small
+            >no words are du right now. Add new vocabulary below, or come back
+            later as cards become due.</small
+          >
+        </div>
+        <div class="card found-word-review">
+          <div class="left-side-word-review">
+            <h3>Ready to review</h3>
+            <small
+              >You have <span id="num-words">0</span> words waiting. A few
+              minutes keeps them fresh.</small
+            >
+          </div>
+          <button type="button">Start reviewing</button>
         </div>
       </section>
     </main>
-
-    <script>
-      // ==========================================
-      // 1. DOM Elements
-      // ==========================================
-      const formAddWord = document.getElementById("form-add-word");
-      const inputWord = document.getElementById("input-word");
-      const inputMeaning = document.getElementById("input-meaning");
-      const inputDescription = document.getElementById("input-description");
-
-      const cardWord = document.getElementById("card-word");
-      const cardMeaning = document.getElementById("card-meaning");
-      const cardDescription = document.getElementById("card-description");
-      const btnShowMeaning = document.getElementById("btn-show-meaning");
-      const reviewContainer = document.getElementById("review-actions-container");
-      const btnRemembered = document.getElementById("btn-remembered");
-      const btnForgot = document.getElementById("btn-forgot");
-
-      // ==========================================
-      // 2. Data Layer (Word Service)
-      // ==========================================
-      const STORAGE_KEY = "flashcards_words";
-
-      const wordService = {
-        getAllWords() {
-          const rawData = localStorage.getItem(STORAGE_KEY);
-          return rawData ? JSON.parse(rawData) : [];
-        },
-
-        saveAllWords(wordsArray) {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(wordsArray));
-        },
-
-        addWord(wordText, meaningText, descriptionText) {
-          const words = this.getAllWords();
-          const todayDate = new Date().toISOString().split("T")[0];
-
-          const newWordItem = {
-            id: Date.now(),
-            word: wordText,
-            meaning: meaningText,
-            description: descriptionText,
-            nextReviewDate: todayDate,
-            interval: 1,
-          };
-
-          words.push(newWordItem);
-          this.saveAllWords(words);
-        },
-
-        getWordsToReview() {
-          const words = this.getAllWords();
-          const todayDate = new Date().toISOString().split("T")[0];
-          return words.filter((item) => item.nextReviewDate <= todayDate);
-        },
-
-        updateWordReview(wordId, isRemembered) {
-          const words = this.getAllWords();
-          const wordIndex = words.findIndex((w) => w.id === wordId);
-
-          if (wordIndex === -1) return;
-
-          const targetWord = words[wordIndex];
-
-          if (isRemembered) {
-            // خوارزمية التكرار: مضاعفة الفترة الزمنية
-            targetWord.interval = targetWord.interval * 2;
-
-            // حساب تاريخ المراجعة القادم
-            const nextDate = new Date();
-            nextDate.setDate(nextDate.getDate() + targetWord.interval);
-            targetWord.nextReviewDate = nextDate.toISOString().split("T")[0];
-          } else {
-            // إعادة التعيين لليوم في حال النسيان
-            targetWord.interval = 1;
-            const todayDate = new Date().toISOString().split("T")[0];
-            targetWord.nextReviewDate = todayDate;
-          }
-
-          words[wordIndex] = targetWord;
-          this.saveAllWords(words);
-        },
-      };
-
-      // ==========================================
-      // 3. UI Controller & Rendering
-      // ==========================================
-      let currentCard = null;
-
-      function renderCurrentCard() {
-        const wordsToReview = wordService.getWordsToReview();
-
-        // إخفاء تفاصيل الكرت السابق دائماً عند إعادة الرسم
-        cardMeaning.classList.add("hide");
-        cardDescription.classList.add("hide");
-        reviewContainer.classList.add("hide");
-
-        if (wordsToReview.length === 0) {
-          currentCard = null;
-          cardWord.textContent = "All caught up! No words to review today. 🎉";
-          cardMeaning.textContent = "";
-          cardDescription.textContent = "";
-          btnShowMeaning.classList.add("hide");
-          return;
-        }
-
-        // عرض الكلمة الأولى في الطابور
-        currentCard = wordsToReview[0];
-        cardWord.textContent = currentCard.word;
-        cardMeaning.textContent = `Meaning: ${currentCard.meaning}`;
-        cardDescription.textContent = currentCard.description
-          ? `Example: ${currentCard.description}`
-          : "";
-
-        btnShowMeaning.classList.remove("hide");
-      }
-
-      // ==========================================
-      // 4. Event Listeners
-      // ==========================================
-
-      // إضافة كلمة جديدة
-      formAddWord.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const word = inputWord.value.trim();
-        const meaning = inputMeaning.value.trim();
-        const description = inputDescription.value.trim();
-
-        wordService.addWord(word, meaning, description);
-        formAddWord.reset();
-        renderCurrentCard();
-      });
-
-      // إظهار المعنى وأزرار التقييم
-      btnShowMeaning.addEventListener("click", () => {
-        cardMeaning.classList.remove("hide");
-        cardDescription.classList.remove("hide");
-        reviewContainer.classList.remove("hide");
-        btnShowMeaning.classList.add("hide");
-      });
-
-      // تقييم الكلمة: تم التذكر
-      btnRemembered.addEventListener("click", () => {
-        if (!currentCard) return;
-        wordService.updateWordReview(currentCard.id, true);
-        renderCurrentCard();
-      });
-
-      // تقييم الكلمة: تم النسيان
-      btnForgot.addEventListener("click", () => {
-        if (!currentCard) return;
-        wordService.updateWordReview(currentCard.id, false);
-        renderCurrentCard();
-      });
-
-      // التشغيل الأولي عند فتح الصفحة
-      renderCurrentCard();
-    </script>
   </body>
 </html>

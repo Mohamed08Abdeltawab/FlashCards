@@ -62,14 +62,13 @@ function renderCards() {
   const levelText = "Level 1";
 
   for (const card of cards) {
-
     const deck = document.createElement("div");
-        const deckInfo = document.createElement("div");
-            const h4 = document.createElement("h4");
-            const small = document.createElement("small");
-        const level = document.createElement("div");
-            const progress = document.createElement("progress");
-            const level1 = document.createElement("span");
+    const deckInfo = document.createElement("div");
+    const h4 = document.createElement("h4");
+    const small = document.createElement("small");
+    const level = document.createElement("div");
+    const progress = document.createElement("progress");
+    const level1 = document.createElement("span");
 
     h4.textContent = card.word;
     small.textContent = card.example;
@@ -92,4 +91,15 @@ function renderCards() {
     deck.classList.add("deck");
     decksContainer.append(deck);
   }
+  updateStatistics();
 }
+
+function updateStatistics() {
+  const numWords = cards.length;
+  totalWordsElement.textContent = numWords;
+  numWordsElements.forEach((w) => {
+    w.textContent = numWords;
+  });
+}
+
+

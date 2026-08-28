@@ -3,13 +3,13 @@
 }
 * {
   box-sizing: border-box;
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
 }
 body {
   margin: 0;
   padding: 24px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
   font-family:
     system-ui,
     -apple-system,
@@ -203,4 +203,47 @@ input:focus {
 
 button[type="submit"]{
   width: 150px;
+}
+
+.level{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+progress {
+    width: 100px;
+    height: 7px;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #edf0f4ce;
+}
+
+progress::-webkit-progress-value {
+    background-color: #4c5bea;
+    border-radius: 10px;
+}
+
+.deck{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deck-info{
+  text-align: left;
+  margin-left: 20px;
+  padding: 10px 0;
+  line-height: 1.6;
+}
+
+.deck-info small{
+  color: #666666;
 }

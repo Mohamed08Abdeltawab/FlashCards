@@ -3,14 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="script.js"></script>
+    <title>Smart Flashcards</title>
+
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
+
   <body>
     <header>
       <section id="left-side-container">
-        <img src="./images/logo.jpg" />
+        <img src="./images/logo.jpg" alt="Smart Flashcards logo" />
+
         <div>
           <h3 id="title">Smart Flashcards</h3>
           <small>Spaced-repetition vocabulary</small>
@@ -19,63 +22,104 @@
 
       <section id="right-side-container">
         <div id="status">
-          <img src="icon" />
-          <span id="day streak">0</span> day streak
+          <img src="./images/streak-icon.png" alt="" />
+          <span id="day-streak">0</span>
+          <span>day streak</span>
         </div>
       </section>
     </header>
 
     <main>
       <section class="status-container">
-        <div class="stataus-details-container">
-          <h3 class="word-number" style="color: blue">0</h3>
-          <p class="desc">words due</p>
+        <div class="status-details-container">
+          <h3 class="word-number due-words">0</h3>
+          <p>Words due</p>
         </div>
-        <div class="stataus-details-container">
-          <h3 class="word-number" style="color: black">0</h3>
-          <p class="total">Total words</p>
+
+        <div class="status-details-container">
+          <h3 class="word-number total-words">0</h3>
+          <p>Total words</p>
         </div>
-        <div class="stataus-details-container">
-          <h3 class="word-number" style="color: green">0</h3>
-          <p class="mastered">Mastered</p>
+
+        <div class="status-details-container">
+          <h3 class="word-number mastered-words">0</h3>
+          <p>Mastered</p>
         </div>
-        <div class="stataus-details-container">
-          <h3 class="word-number" style="color: red">0</h3>
-          <p class="day-streak">Day streak</p>
+
+        <div class="status-details-container">
+          <h3 class="word-number streak-words">0</h3>
+          <p>Day streak</p>
         </div>
       </section>
 
       <section class="review-container">
         <div class="card no-word-review">
-          <img src="./images/all-done.png" alt="" />
+          <img src="./images/all-done.png" alt="All words reviewed" />
+
           <h3>You're all caught up</h3>
-          <small
-            >no words are du right now. Add new vocabulary below, or come back
-            later as cards become due.</small
-          >
+
+          <small>
+            No words are due right now. Add new vocabulary below, or come back
+            later as cards become due.
+          </small>
         </div>
+
         <div class="card found-word-review">
           <div class="left-side-word-review">
             <h3>Ready to review</h3>
-            <small
-              >You have <span id="num-words">0</span> words waiting. A few
-              minutes keeps them fresh.</small
-            >
+
+            <small>
+              You have <span class="num-words">0</span> words waiting. A few
+              minutes keeps them fresh.
+            </small>
           </div>
+
           <button type="button">Start reviewing</button>
         </div>
       </section>
 
       <h3 class="header-add-word">ADD A WORD</h3>
 
-      <form action="" class="card add-word-form">
+      <form class="card add-word-form">
         <section class="add-word-container">
-          <input type="text" placeholder="Word or phrase" required />
-          <input type="text" placeholder="Translation or meaning" />
-          <input type="text" placeholder="Example sentence (optional)" />
+          <input
+            type="text"
+            placeholder="Word or phrase"
+            required
+          />
+
+          <input
+            type="text"
+            placeholder="Translation or meaning"
+          />
+
+          <input
+            type="text"
+            placeholder="Example sentence (optional)"
+          />
         </section>
+
         <button type="submit">+ Add word</button>
       </form>
+
+      <h3 class="header-add-word">
+        YOUR DECK (<span class="num-words">0</span>)
+      </h3>
+
+      <section class="card decks-container">
+        <div class="deck">
+          <div class="deck-info">
+            <h4 class="word-deck">Apple</h4>
+            <small>Description</small>
+          </div>
+
+          <div class="level">
+            <progress value="2" max="10"></progress>
+            <span>Level 1</span>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>
+```

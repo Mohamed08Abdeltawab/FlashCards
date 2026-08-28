@@ -40,6 +40,7 @@ addWordForm.addEventListener("submit", (e) => {
 
   //3
   const wordCard = {
+    id: Date.now(),
     word,
     meaning,
     example,

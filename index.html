@@ -74,7 +74,7 @@
             </small>
           </div>
 
-          <button type="button">Start reviewing</button>
+          <button class="global-btn" type="button">Start reviewing</button>
         </div>
       </section>
 
@@ -82,24 +82,27 @@
 
       <form class="card add-word-form">
         <section class="add-word-container">
-          <input id="wordInput"
+          <input
+            id="wordInput"
             type="text"
             placeholder="Word or phrase"
             required
           />
 
-          <input id="meaningInput"
+          <input
+            id="meaningInput"
             type="text"
             placeholder="Translation or meaning"
           />
 
-          <input id="exampleInput"
+          <input
+            id="exampleInput"
             type="text"
             placeholder="Example sentence (optional)"
           />
         </section>
 
-        <button type="submit">+ Add word</button>
+        <button class="global-btn" type="submit">+ Add word</button>
       </form>
 
       <h3 class="header-add-word">
@@ -117,6 +120,7 @@
             <progress id="progress" value="2" max="10"></progress>
             <span id="level-name">Level 1</span>
           </div>
+          <button class="delete-card" aria-label="Delete card" type="button">X</button>
         </div>
       </section>
     </main>

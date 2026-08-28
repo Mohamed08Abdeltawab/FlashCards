@@ -181,7 +181,11 @@ header {
    Buttons
 ========================= */
 
-button {
+button:hover{
+  cursor: pointer;
+}
+
+.global-btn {
   width: 180px;
   height: 50px;
 
@@ -195,7 +199,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.global-btn:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 162, 0.702);
 }
@@ -262,13 +266,16 @@ input:focus {
 .deck {
   width: 100%;
   padding: 10px 20px;
+  padding: 10px 15px 10px 20px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
 .deck-info {
+  flex: 1;
+  min-width: 0;
+
   text-align: left;
   line-height: 1.6;
 }
@@ -282,7 +289,7 @@ input:focus {
 }
 
 .level {
-  width: 200px;
+  width: 180px;
 
   display: flex;
   align-items: center;
@@ -307,6 +314,41 @@ progress::-webkit-progress-value {
   border-radius: 10px;
 }
 
+.delete-card {
+  flex: 0 0 36px;
+
+  width: 36px;
+  height: 36px;
+
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent;
+  color: #888;
+
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+
+  box-shadow: none;
+
+  font-size: 20px;
+  line-height: 1;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.delete-card:hover {
+  background-color: #f5f5f5;
+  color: #d33;
+  border-color: #d3d3d3;
+}
+
 /* =========================
    States
 ========================= */
@@ -314,7 +356,6 @@ progress::-webkit-progress-value {
 .found-word-review {
   display: none;
 }
-
 
 .has-words .no-word-review {
   display: none;

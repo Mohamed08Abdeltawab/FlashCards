@@ -82,18 +82,18 @@
 
       <form class="card add-word-form">
         <section class="add-word-container">
-          <input
+          <input id="wordInput"
             type="text"
             placeholder="Word or phrase"
             required
           />
 
-          <input
+          <input id="meaningInput"
             type="text"
             placeholder="Translation or meaning"
           />
 
-          <input
+          <input id="exampleInput"
             type="text"
             placeholder="Example sentence (optional)"
           />
@@ -114,8 +114,8 @@
           </div>
 
           <div class="level">
-            <progress value="2" max="10"></progress>
-            <span>Level 1</span>
+            <progress id="progress" value="2" max="10"></progress>
+            <span id="level-name">Level 1</span>
           </div>
         </div>
       </section>

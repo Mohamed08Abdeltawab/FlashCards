@@ -17,7 +17,7 @@ body {
     Roboto,
     Arial,
     sans-serif;
-  background: #d2d2d2;
+  background: #eeeeeee6;
   color: #101011;
 }
 
@@ -27,74 +27,72 @@ body {
   gap: 20px;
 }
 
-
-.stataus-details-container{
-    border: 1px solid rgb(223, 222, 222);
-    background-color: rgb(236, 233, 233);
-    border-radius: 20px;
-    width: 150px;
-    height: 70px;
-    padding: 15px;
-    margin-bottom: 20px;
+.stataus-details-container {
+  border: 1px solid rgb(223, 222, 222);
+  background-color: rgb(236, 233, 233);
+  border-radius: 20px;
+  width: 150px;
+  height: 70px;
+  padding: 15px;
+  margin-bottom: 20px;
 }
 
-.word-number{
-    font-weight: bolder;
+.word-number {
+  font-weight: bolder;
 }
 
-header{
-    display: flex;
-    flex-direction: row;
-    justify-content:space-between;
-    margin-bottom: 20px;
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-#left-side-container{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+#left-side-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
-#left-side-container img{
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+#left-side-container img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
 }
 
-#right-side-container{
-    border: 1px solid rgb(223, 222, 222);
-    background-color: rgb(236, 233, 233);
-    border-radius: 15px;
-    width: 200px;
-    height: 40px;
-    padding: 5px;
+#right-side-container {
+  border: 1px solid rgb(223, 222, 222);
+  background-color: rgb(236, 233, 233);
+  border-radius: 15px;
+  width: 200px;
+  height: 40px;
+  padding: 5px;
 
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-#right-side-container img{
-    width: 20px;
-    height: 20px;
+#right-side-container img {
+  width: 20px;
+  height: 20px;
 }
 
-
-.review-container{
+.review-container {
   display: flex;
   flex-direction: column;
 }
 
-.no-word-review{
+.no-word-review {
   width: 100%;
   height: 300px;
   padding-top: 30px;
 }
-.no-word-review img{
+.no-word-review img {
   width: 150px;
   height: 150px;
 }
 
-.found-word-review{
+.found-word-review {
   width: 100%;
   height: 150px;
   display: flex;
@@ -102,7 +100,7 @@ header{
   justify-content: space-between;
 }
 
-button{
+button {
   width: 180px;
   height: 50px;
   border-radius: 50px;
@@ -113,12 +111,12 @@ button{
   transition: background-color 0.3s ease;
 }
 
-button:hover{
+button:hover {
   cursor: pointer;
   background-color: rgba(1, 1, 136, 0.702);
 }
 
-.card{
+.card {
   background-color: white;
   border-radius: 10px;
   align-items: center;
@@ -129,22 +127,80 @@ button:hover{
   margin-bottom: 20px;
 }
 
-.left-side-word-review{
+.left-side-word-review {
   text-align: left;
   margin-left: 20px;
   line-height: 1.8;
 }
 
-#num-words{
+#num-words {
   font-weight: bolder;
 }
 
 .has-words .no-word-review {
-    display: none;
+  display: none;
 }
 
 .has-words .found-word-review {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+input {
+  width: 100%;
+  height: 54px;
+
+  padding: 0 20px;
+
+  background-color: #f1f3f5;
+  border: 1px solid #dfe3e6;
+  border-radius: 14px;
+
+  font-size: 16px;
+  color: #333;
+
+  outline: none;
+  box-sizing: border-box;
+
+}
+
+input::placeholder {
+  color: #8b9299;
+}
+
+input:focus {
+  outline: 2px solid rgba(98, 98, 197, 0.825);
+}
+
+.add-word-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.header-add-word {
+  margin-bottom: 10px;
+  color: #8b9299;
+}
+
+.add-word-container input:last-child {
+  grid-column: 1/-1;
+}
+
+.add-word-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+
+.add-word-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+button[type="submit"]{
+  width: 150px;
 }

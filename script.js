@@ -9,6 +9,7 @@ const exampleInput = document.getElementById("exampleInput");
 
 const decksContainer = document.querySelector(".decks-container");
 
+const reviewContainer = document.querySelector(".review-container");
 const noWordReview = document.querySelector(".no-word-review");
 const foundWordReview = document.querySelector(".found-word-review");
 
@@ -92,8 +93,10 @@ function renderCards() {
     decksContainer.append(deck);
   }
   updateStatistics();
+  updateReviewState();
 }
 
+//helper function to update number of words
 function updateStatistics() {
   const numWords = cards.length;
   totalWordsElement.textContent = numWords;
@@ -102,4 +105,11 @@ function updateStatistics() {
   });
 }
 
-
+//herper function to control in show and hide cards
+function updateReviewState(){
+    if(cards.length > 0){
+        reviewContainer.classList.add("has-words");
+    }else{
+        reviewContainer.classList.remove("has-words");
+    }
+}

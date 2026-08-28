@@ -311,6 +311,11 @@ progress::-webkit-progress-value {
    States
 ========================= */
 
+.found-word-review {
+  display: none;
+}
+
+
 .has-words .no-word-review {
   display: none;
 }

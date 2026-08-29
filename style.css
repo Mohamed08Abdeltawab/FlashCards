@@ -181,7 +181,7 @@ header {
    Buttons
 ========================= */
 
-button:hover{
+button:hover {
   cursor: pointer;
 }
 
@@ -263,13 +263,21 @@ input:focus {
    Deck
 ========================= */
 
+
+.decks-container{
+  background-color: transparent;
+}
+
 .deck {
-  width: 100%;
-  padding: 10px 20px;
-  padding: 10px 15px 10px 20px;
+  min-height: 70px;
+  padding: 15px 20px;
 
   display: flex;
   align-items: center;
+  gap: 20px;
+  margin: 10px;
+  background-color: #d8d8ee;
+  border-radius: 10px;
 }
 
 .deck-info {
@@ -290,6 +298,7 @@ input:focus {
 
 .level {
   width: 180px;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
@@ -329,7 +338,7 @@ progress::-webkit-progress-value {
   background-color: transparent;
   color: #888;
 
-  border: 1px solid #e0e0e0;
+  border: 1px solid #a4a2a2;
   border-radius: 50%;
 
   font-size: 20px;

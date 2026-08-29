@@ -109,7 +109,20 @@
         YOUR DECK (<span class="num-words">0</span>)
       </h3>
 
-      <section class="card decks-container">
+      <section class="decks-container">
+        <div class="deck">
+          <div class="deck-info">
+            <h4 class="word-deck">Apple</h4>
+            <small>Description</small>
+          </div>
+
+          <div class="level">
+            <progress id="progress" value="2" max="10"></progress>
+            <span id="level-name">Level 1</span>
+          </div>
+          <button class="delete-card" data-word-id="1" aria-label="Delete card" type="button">X</button>
+        </div>
+
         <div class="deck">
           <div class="deck-info">
             <h4 class="word-deck">Apple</h4>

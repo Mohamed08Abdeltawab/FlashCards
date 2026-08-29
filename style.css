@@ -332,8 +332,6 @@ progress::-webkit-progress-value {
   border: 1px solid #e0e0e0;
   border-radius: 50%;
 
-  box-shadow: none;
-
   font-size: 20px;
   line-height: 1;
 

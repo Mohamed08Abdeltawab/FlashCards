@@ -71,12 +71,23 @@ function renderCards() {
     const level = document.createElement("div");
     const progress = document.createElement("progress");
     const level1 = document.createElement("span");
+    const btnDel = document.createElement("button");
 
     h4.textContent = card.word;
     small.textContent = card.example;
 
     progress.value = progressValue;
     level1.textContent = levelText;
+
+    btnDel.textContent = "x";
+    btnDel.dataset.wordId = card.id;
+
+    level.classList.add("level");
+    deckInfo.classList.add("deck-info");
+    btnDel.classList.add("delete-card");
+    btnDel.setAttribute("aria-label", "Delete card");
+
+    deck.classList.add("deck");
 
     deckInfo.append(h4);
     deckInfo.append(small);
@@ -86,11 +97,8 @@ function renderCards() {
 
     deck.append(deckInfo);
     deck.append(level);
+    deck.append(btnDel);
 
-    level.classList.add("level");
-    deckInfo.classList.add("deck-info");
-
-    deck.classList.add("deck");
     decksContainer.append(deck);
   }
   updateStatistics();
@@ -107,10 +115,22 @@ function updateStatistics() {
 }
 
 //herper function to control in show and hide cards
-function updateReviewState(){
-    if(cards.length > 0){
-        reviewContainer.classList.add("has-words");
-    }else{
-        reviewContainer.classList.remove("has-words");
-    }
+function updateReviewState() {
+  if (cards.length > 0) {
+    reviewContainer.classList.add("has-words");
+  } else {
+    reviewContainer.classList.remove("has-words");
+  }
 }
+
+decksContainer.addEventListener("click", (e) => {
+  const btnDel = e.target.closest(".delete-card");
+  if (!btnDel) return;
+
+  const wordId = Number(btnDel.dataset.wordId);
+  //   const index = cards.findIndex((w) => w.id === wordId);
+  //   if (index === -1) return;
+  //   cards.splice(index, 1);
+  cards = cards.filter((card) => card.id !== wordId);
+  renderCards();
+});

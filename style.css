@@ -394,17 +394,12 @@ progress::-webkit-progress-value {
 
 .flashcard {
   width: 100%;
-  min-height: 500px;
-  margin: auto 0;
+  max-width: 700px;
+  height: 500px;
+  margin: 100px auto 0;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 25px;
+  perspective: 1000px;
+  cursor: pointer;
 }
 
 .end-review {
@@ -444,4 +439,147 @@ progress::-webkit-progress-value {
 .review-header {
   display: flex;
   justify-content: space-between;
+}
+
+
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+
+.flashcard.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+
+
+.card-face {
+  position: absolute;
+  inset: 0;
+
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 25px;
+  border: 1px solid #ddd;
+
+  backface-visibility: hidden;
+}
+
+
+
+.card-front {
+  background-color: white;
+}
+
+.card-back {
+  background-color: #eef2ff;
+  transform: rotateY(180deg);
+}
+
+/* front content */
+
+.card-label {
+  margin-bottom: 20px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #777;
+}
+
+.card-word,
+.card-meaning {
+  margin: 0 0 20px;
+
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.listen-button {
+  width: auto;
+  height: auto;
+
+  padding: 8px 16px;
+
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+
+  box-shadow: none;
+}
+
+.card-hint {
+  position: absolute;
+  bottom: 30px;
+
+  color: #999;
+}
+
+/* back content */
+
+.card-meaning {
+  color: #4c5bea;
+}
+
+.card-example {
+  margin: 0 0 30px;
+
+  color: #777;
+  font-style: italic;
+  text-align: center;
+}
+
+/* button review */
+
+.review-actions {
+  position: absolute;
+  bottom: -90px;
+
+  width: 100%;
+
+  display: flex;
+  gap: 15px;
+}
+
+.review-actions button {
+  flex: 1;
+  width: auto;
+  margin: 0;
+}
+
+.still-learning {
+  background-color: #f5d0d0;
+  color: rgb(136, 9, 9);
+}
+
+.knew-it {
+  background-color: #00a859;
+  color: white;
+}
+
+.still-learning, .knew-it{
+  padding: 15px;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 4px 10px rgb(135, 133, 133);
+  transition: background-color .3s ease;
+}
+
+.still-learning:hover{
+background-color:rgb(220, 156, 156);
+
+}
+.knew-it:hover{
+background-color:green;
 }

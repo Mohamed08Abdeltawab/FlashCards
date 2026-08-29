@@ -22,7 +22,6 @@ const totalWordsElement = document.querySelector(".total-words");
 const masteredWordsElement = document.querySelector(".mastered-words");
 const dayStreakElement = document.querySelector(".streak-words");
 
-
 // Review DOM Elements
 const reviewSession = document.querySelector(".review-session");
 
@@ -33,6 +32,14 @@ const reviewCounter = document.querySelector(".review-counter");
 const reviewProgressBar = document.querySelector(".review-progress-bar");
 
 const flashcard = document.querySelector(".flashcard");
+
+const cardInner = document.querySelector(".card-inner");
+
+const listenButton = document.querySelector(".listen-button");
+
+const stillLearningButton = document.querySelector(".still-learning");
+
+const knewItButton = document.querySelector(".knew-it");
 
 
 // Application Data
@@ -163,18 +170,20 @@ function startReview() {
 
   currentCardIndex = 0;
   isReviewing = true;
+
+  showCurrentCard();
 }
 
-startReviewButton.addEventListener("click", (e) => {
+startReviewButton.addEventListener("click", () => {
   startReview();
 });
 
-
 //show current card
-function showCurrentCard(){
-  reviewSession.innerHTML = "";
+function showCurrentCard() {
+  flashcard.innerHTML = "";
 
-  for(card of reviewCards){
-    
-  }
+  const currentCard = reviewCards[currentCardIndex];
+  const word = document.createElement("h3");
+  word.textContent = currentCard.word;
+  flashcard.prepend(word);
 }

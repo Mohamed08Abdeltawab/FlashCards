@@ -41,6 +41,11 @@ const stillLearningButton = document.querySelector(".still-learning");
 
 const knewItButton = document.querySelector(".knew-it");
 
+//flash card content
+const cardWord = document.querySelector(".card-word");
+const cardMeaning = document.querySelector(".card-meaning");
+const cardExample = document.querySelector(".card-example");
+
 // Application Data
 let cards = [];
 // Review State
@@ -157,7 +162,7 @@ decksContainer.addEventListener("click", (e) => {
 
 function getDueCards() {
   const dueCards = cards.filter(
-    (card) => new Date(card.nextReview) <= new Date(),
+    (card) => new Date(card.nextReview) >= new Date(),
   );
 
   return dueCards;
@@ -180,9 +185,10 @@ startReviewButton.addEventListener("click", () => {
 //show current card
 function showCurrentCard() {
   const currentCard = reviewCards[currentCardIndex];
-  const word = document.createElement("h3");
-  word.textContent = currentCard.word;
-  flashcard.prepend(word);
+  cardWord.textContent = currentCard.word;
+  cardMeaning.textContent = currentCard.meaning;
+  cardExample.textContent = currentCard.example;
+  flashcard.classList.remove("flipped");
 }
 
 flashcard.addEventListener("click", () => {

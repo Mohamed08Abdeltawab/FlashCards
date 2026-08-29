@@ -24,7 +24,6 @@ const dayStreakElement = document.querySelector(".streak-words");
 
 // Application Data
 let cards = [];
-
 // Review State
 let currentCardIndex = 0;
 let isReviewing = false;
@@ -39,29 +38,30 @@ addWordForm.addEventListener("submit", (e) => {
   const example = exampleInput.value.trim();
 
   //3
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
   const wordCard = {
     id: Date.now(),
     word,
     meaning,
     example,
+    //adding data for reviewing
+    level: 1,
+    nextReview: tomorrow.toISOString(),
   };
   //4
   cards.push(wordCard);
-
-  renderCards();
-
-  //   console.log(cards);
-
   wordInput.value = "";
   meaningInput.value = "";
   exampleInput.value = "";
+
+  renderCards();
 });
 
 function renderCards() {
   decksContainer.innerHTML = "";
 
   const progressValue = 0;
-  const levelText = "Level 1";
 
   for (const card of cards) {
     const deck = document.createElement("div");
@@ -77,7 +77,7 @@ function renderCards() {
     small.textContent = card.example;
 
     progress.value = progressValue;
-    level1.textContent = levelText;
+    level1.textContent = `Level ${card.level}`;
 
     btnDel.textContent = "x";
     btnDel.dataset.wordId = card.id;
@@ -103,6 +103,7 @@ function renderCards() {
   }
   updateStatistics();
   updateReviewState();
+  dueWordsElement.textContent = getDueCards().length;
 }
 
 //helper function to update number of words
@@ -131,6 +132,32 @@ decksContainer.addEventListener("click", (e) => {
   //   const index = cards.findIndex((w) => w.id === wordId);
   //   if (index === -1) return;
   //   cards.splice(index, 1);
-  cards = cards.filter((card) => card.id !== wordId);
+  cards = cards.filter((card) => card.id <= wordId);
   renderCards();
 });
+
+function getDueCards() {
+  const dueCards = cards.filter(
+    (card) => new Date(card.nextReview) <= new Date(),
+  );
+
+  return dueCards;
+}
+
+function startReview() {
+  reviewCards = getDueCards();
+  if (reviewCards.length <= 0) return;
+
+  currentCardIndex = 0;
+  isReviewing = true;
+}
+
+startReviewButton.addEventListener("click", (e) => {
+  startReview();
+});
+
+
+//show current card
+showCurrentCard(){
+  
+}

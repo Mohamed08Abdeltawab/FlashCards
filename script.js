@@ -156,7 +156,7 @@ decksContainer.addEventListener("click", (e) => {
   //   const index = cards.findIndex((w) => w.id === wordId);
   //   if (index === -1) return;
   //   cards.splice(index, 1);
-  cards = cards.filter((card) => card.id <= wordId);
+  cards = cards.filter((card) => card.id !== wordId);
   renderCards();
 });
 
@@ -193,4 +193,21 @@ function showCurrentCard() {
 
 flashcard.addEventListener("click", () => {
   flashcard.classList.toggle("flipped");
+});
+
+function nextReviewCard() {
+  currentCardIndex++;
+  if (currentCardIndex >= reviewCards.length) return;
+
+  showCurrentCard();
+}
+
+stillLearningButton.addEventListener("click", (e) => {
+  e.stopPropagation();
+  nextReviewCard();
+});
+
+knewItButton.addEventListener("click", (e) => {
+  e.stopPropagation();
+  nextReviewCard();
 });

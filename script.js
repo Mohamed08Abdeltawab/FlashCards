@@ -22,6 +22,19 @@ const totalWordsElement = document.querySelector(".total-words");
 const masteredWordsElement = document.querySelector(".mastered-words");
 const dayStreakElement = document.querySelector(".streak-words");
 
+
+// Review DOM Elements
+const reviewSession = document.querySelector(".review-session");
+
+const endReviewButton = document.querySelector(".end-review");
+
+const reviewCounter = document.querySelector(".review-counter");
+
+const reviewProgressBar = document.querySelector(".review-progress-bar");
+
+const flashcard = document.querySelector(".flashcard");
+
+
 // Application Data
 let cards = [];
 // Review State
@@ -158,6 +171,10 @@ startReviewButton.addEventListener("click", (e) => {
 
 
 //show current card
-showCurrentCard(){
-  
+function showCurrentCard(){
+  reviewSession.innerHTML = "";
+
+  for(card of reviewCards){
+    
+  }
 }

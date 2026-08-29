@@ -117,25 +117,35 @@
           </div>
 
           <div class="level">
-            <progress id="progress" value="2" max="10"></progress>
+            <progress class="level-progress" value="2" max="10"></progress>
             <span id="level-name">Level 1</span>
           </div>
-          <button class="delete-card" data-word-id="1" aria-label="Delete card" type="button">X</button>
+          <button
+            class="delete-card"
+            data-word-id="1"
+            aria-label="Delete card"
+            type="button"
+          >
+            x
+          </button>
         </div>
 
-        <div class="deck">
-          <div class="deck-info">
-            <h4 class="word-deck">Apple</h4>
-            <small>Description</small>
-          </div>
-
-          <div class="level">
-            <progress id="progress" value="2" max="10"></progress>
-            <span id="level-name">Level 1</span>
-          </div>
-          <button class="delete-card" data-word-id="1" aria-label="Delete card" type="button">X</button>
-        </div>
       </section>
     </main>
+
+    <section class="review-session">
+      <div class="review-header">
+        <button class="end-review">× End session</button>
+        <span class="review-counter">0 / 5</span>
+      </div>
+
+      <div class="review-progress">
+        <progress class="review-progress-bar"></progress>
+      </div>
+
+      <div class="flashcard">
+        <!-- Card content -->
+      </div>
+    </section>
   </body>
 </html>

@@ -263,8 +263,7 @@ input:focus {
    Deck
 ========================= */
 
-
-.decks-container{
+.decks-container {
   background-color: transparent;
 }
 
@@ -305,7 +304,7 @@ input:focus {
   gap: 10px;
 }
 
-progress {
+.level-progress {
   width: 100px;
   height: 7px;
 
@@ -314,8 +313,17 @@ progress {
   overflow: hidden;
 }
 
+.review-progress-bar {
+  width: 100%;
+  height: 7px;
+
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 progress::-webkit-progress-bar {
-  background-color: #edf0f4;
+  background-color: #c3c7cc;
 }
 
 progress::-webkit-progress-value {
@@ -370,4 +378,70 @@ progress::-webkit-progress-value {
 
 .has-words .found-word-review {
   display: flex;
+}
+
+/* card content */
+.review-session {
+  width: 100%;
+  max-width: 700px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.flashcard {
+  width: 100%;
+  min-height: 500px;
+  margin: auto 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+}
+
+.end-review {
+  position: relative;
+  border: none;
+  background: transparent;
+  color: #0b0a0a;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 8px 4px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+  border-radius: 0;
+  transition: color 0.25s ease;
+}
+
+.end-review::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: rgb(89, 89, 93);
+  transition: width 0.25s ease-in-out;
+}
+
+.end-review:hover {
+  color: #414143;
+}
+
+.end-review:hover::after {
+  width: 100%;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
 }

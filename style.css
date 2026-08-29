@@ -385,7 +385,7 @@ progress::-webkit-progress-value {
   width: 100%;
   max-width: 700px;
   min-height: 100vh;
-  margin: 0 auto;
+  margin: 40px auto 0;
   padding: 24px 0;
 
   display: flex;
@@ -396,7 +396,7 @@ progress::-webkit-progress-value {
   width: 100%;
   max-width: 700px;
   height: 500px;
-  margin: 100px auto 0;
+  margin: 80px auto 0;
 
   perspective: 1000px;
   cursor: pointer;
@@ -441,8 +441,6 @@ progress::-webkit-progress-value {
   justify-content: space-between;
 }
 
-
-
 .card-inner {
   position: relative;
   width: 100%;
@@ -452,12 +450,9 @@ progress::-webkit-progress-value {
   transition: transform 0.6s ease;
 }
 
-
 .flashcard.flipped .card-inner {
   transform: rotateY(180deg);
 }
-
-
 
 .card-face {
   position: absolute;
@@ -475,8 +470,6 @@ progress::-webkit-progress-value {
 
   backface-visibility: hidden;
 }
-
-
 
 .card-front {
   background-color: white;
@@ -544,7 +537,7 @@ progress::-webkit-progress-value {
 
 .review-actions {
   position: absolute;
-  bottom: -90px;
+  bottom: -70px;
 
   width: 100%;
 
@@ -568,18 +561,18 @@ progress::-webkit-progress-value {
   color: white;
 }
 
-.still-learning, .knew-it{
+.still-learning,
+.knew-it {
   padding: 15px;
   border-radius: 20px;
   border: none;
   box-shadow: 0 4px 10px rgb(135, 133, 133);
-  transition: background-color .3s ease;
+  transition: background-color 0.3s ease;
 }
 
-.still-learning:hover{
-background-color:rgb(220, 156, 156);
-
+.still-learning:hover {
+  background-color: rgb(220, 156, 156);
 }
-.knew-it:hover{
-background-color:green;
+.knew-it:hover {
+  background-color: green;
 }

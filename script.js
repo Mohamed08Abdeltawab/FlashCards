@@ -41,7 +41,6 @@ const stillLearningButton = document.querySelector(".still-learning");
 
 const knewItButton = document.querySelector(".knew-it");
 
-
 // Application Data
 let cards = [];
 // Review State
@@ -180,10 +179,12 @@ startReviewButton.addEventListener("click", () => {
 
 //show current card
 function showCurrentCard() {
-  flashcard.innerHTML = "";
-
   const currentCard = reviewCards[currentCardIndex];
   const word = document.createElement("h3");
   word.textContent = currentCard.word;
   flashcard.prepend(word);
 }
+
+flashcard.addEventListener("click", () => {
+  flashcard.classList.toggle("flipped");
+});

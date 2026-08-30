@@ -106,6 +106,8 @@ function renderCards() {
     btnDel.textContent = "x";
     btnDel.dataset.wordId = card.id;
 
+    //update review cards based on abilable cards
+
     level.classList.add("level");
     deckInfo.classList.add("deck-info");
     btnDel.classList.add("delete-card");
@@ -176,8 +178,8 @@ function startReview() {
   isReviewing = true;
 
   reviewSession.classList.add("active");
-
   showCurrentCard();
+  startReviewProgres();
 }
 
 startReviewButton.addEventListener("click", () => {
@@ -202,6 +204,7 @@ function nextReviewCard() {
   if (currentCardIndex >= reviewCards.length) return;
 
   showCurrentCard();
+  updateReviewProgress();
 }
 
 stillLearningButton.addEventListener("click", (e) => {
@@ -219,3 +222,24 @@ endReviewButton.addEventListener("click", () => {
   reviewSession.classList.remove("active");
   isReviewing = false;
 });
+
+function updateReviewProgress() {
+  const dueCards = getDueCards();
+  const totalCards = dueCards.length;
+
+  if (totalCards === 0) {
+    reviewProgressBar.value = 0;
+    reviewCounter.textContent = "0 / 0";
+    return;
+  }
+
+  const current = currentCardIndex;
+  const progress = (current / totalCards) * 100;
+
+  reviewProgressBar.value = progress;
+  reviewCounter.textContent = `${current} / ${totalCards}`;
+}
+
+function startReviewProgres() {
+  reviewCounter.textContent = `0 / ${getDueCards().length}`;
+}

@@ -175,6 +175,8 @@ function startReview() {
   currentCardIndex = 0;
   isReviewing = true;
 
+  reviewSession.classList.add("active");
+
   showCurrentCard();
 }
 
@@ -210,4 +212,10 @@ stillLearningButton.addEventListener("click", (e) => {
 knewItButton.addEventListener("click", (e) => {
   e.stopPropagation();
   nextReviewCard();
+});
+
+//end session
+endReviewButton.addEventListener("click", () => {
+  reviewSession.classList.remove("active");
+  isReviewing = false;
 });

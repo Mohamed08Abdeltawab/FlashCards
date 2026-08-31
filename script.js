@@ -61,7 +61,59 @@ const learningCount = document.querySelector(".learning-count");
 const backToDeckButton = document.querySelector(".back-to-deck");
 
 // Application Data
-let cards = [];
+const seedCards = [
+  {
+    id: 1,
+    word: "Apple",
+    meaning: "تفاحة",
+    example: "I ate an apple this morning.",
+    level: 1,
+    progress: 0,
+    nextReview: new Date("2025-01-01").toISOString(),
+  },
+
+  {
+    id: 2,
+    word: "Book",
+    meaning: "كتاب",
+    example: "This book is very interesting.",
+    level: 1,
+    progress: 0,
+    nextReview: new Date("2025-01-01").toISOString(),
+  },
+
+  {
+    id: 3,
+    word: "Learn",
+    meaning: "يتعلم",
+    example: "I want to learn English quickly.",
+    level: 1,
+    progress: 0,
+    nextReview: new Date("2025-01-01").toISOString(),
+  },
+
+  {
+    id: 4,
+    word: "Travel",
+    meaning: "يسافر",
+    example: "We travel every summer.",
+    level: 1,
+    progress: 0,
+    nextReview: new Date("2025-01-01").toISOString(),
+  },
+
+  {
+    id: 5,
+    word: "Friend",
+    meaning: "صديق",
+    example: "My friend lives in Cairo.",
+    level: 1,
+    progress: 0,
+    nextReview: new Date("2025-01-01").toISOString(),
+  },
+];
+
+let cards = [...seedCards];
 // Review State
 let reviewCards = [];
 let currentCardIndex = 0;
@@ -69,6 +121,8 @@ let isReviewing = false;
 
 let knewItCount = 0;
 let stillLearningCount = 0;
+
+renderCards();
 
 function showView(view) {
   homeView.classList.remove("active");
@@ -88,17 +142,19 @@ addWordForm.addEventListener("submit", (e) => {
   const example = exampleInput.value.trim();
 
   //3
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  const nextReview = new Date();
+
+  nextReview.setMinutes(nextReview.getMinutes() + 10);
+
   const wordCard = {
     id: Date.now(),
     word,
     meaning,
     example,
-    //adding data for reviewing
+
     level: 1,
-    progress: 0, //for level progress
-    nextReview: tomorrow.toISOString(),
+    progress: 0,
+    nextReview: nextReview.toISOString(),
   };
   //4
   cards.push(wordCard);
@@ -191,7 +247,7 @@ decksContainer.addEventListener("click", (e) => {
 
 function getDueCards() {
   const dueCards = cards.filter(
-    (card) => new Date(card.nextReview) >= new Date(),
+    (card) => new Date(card.nextReview) <= new Date(),
   );
 
   return dueCards;
@@ -223,14 +279,16 @@ startReviewButton.addEventListener("click", () => {
 //show current card
 function showCurrentCard() {
   const currentCard = reviewCards[currentCardIndex];
+  flashcard.classList.remove("flipped");
   cardWord.textContent = currentCard.word;
   cardMeaning.textContent = currentCard.meaning;
   cardExample.textContent = currentCard.example;
 }
 
-flashcard.addEventListener("click", () => {
-  const btn = flashcard.closest("button");
+flashcard.addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
   if (btn) return;
+
   flashcard.classList.toggle("flipped");
 });
 
@@ -320,4 +378,5 @@ function showReviewComplete() {
 
 backToDeckButton.addEventListener("click", () => {
   showView(homeView);
+  renderCards();
 });

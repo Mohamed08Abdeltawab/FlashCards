@@ -497,7 +497,19 @@ progress::-webkit-progress-value {
 }
 
 .flashcard.flipped .card-inner {
-  transform: rotateY(180deg);
+  animation: card-switch 280ms ease;
+}
+
+@keyframes card-switch {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .card-face {
@@ -513,8 +525,6 @@ progress::-webkit-progress-value {
 
   border-radius: 25px;
   border: 1px solid #ddd;
-
-  backface-visibility: hidden;
 }
 
 .card-front {
@@ -523,7 +533,17 @@ progress::-webkit-progress-value {
 
 .card-back {
   background-color: #eef2ff;
-  transform: rotateY(180deg);
+  display: none;
+}
+
+/* When flipped: hide front, show back with animation */
+.flashcard.flipped .card-front {
+  display: none;
+}
+
+.flashcard.flipped .card-back {
+  display: flex;
+  animation: card-switch 280ms ease;
 }
 
 /* front content */
@@ -619,6 +639,7 @@ progress::-webkit-progress-value {
 .still-learning:hover {
   background-color: rgb(220, 156, 156);
 }
+
 .knew-it:hover {
   background-color: green;
 }
@@ -643,7 +664,7 @@ progress::-webkit-progress-value {
   display: flex;
 }
 
-.review-complete > img {
+.review-complete>img {
   width: 230px;
   height: 230px;
   object-fit: contain;
@@ -656,13 +677,13 @@ progress::-webkit-progress-value {
   font-weight: 700;
 }
 
-.review-complete > p {
+.review-complete>p {
   margin: 0 0 30px;
   font-size: 16px;
   color: #6b7280;
 }
 
-.review-complete > p span {
+.review-complete>p span {
   font-weight: 700;
 }
 

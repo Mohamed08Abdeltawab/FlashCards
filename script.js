@@ -63,6 +63,7 @@ const backToDeckButton = document.querySelector(".back-to-deck");
 // Application Data
 let cards = [];
 // Review State
+let reviewCards = [];
 let currentCardIndex = 0;
 let isReviewing = false;
 
@@ -131,6 +132,8 @@ function renderCards() {
     btnDel.textContent = "x";
     btnDel.dataset.wordId = card.id;
 
+    reviewProgressBar.value = 0;
+
     level.classList.add("level");
     deckInfo.classList.add("deck-info");
     btnDel.classList.add("delete-card");
@@ -195,7 +198,6 @@ function getDueCards() {
 }
 
 function startReview() {
-  showView(reviewView);
   //intialize with 0
   knewItCount = 0;
   stillLearningCount = 0;
@@ -203,10 +205,15 @@ function startReview() {
   reviewCards = getDueCards();
   if (reviewCards.length <= 0) return;
 
+  showView(reviewView);
   currentCardIndex = 0;
   isReviewing = true;
   showCurrentCard();
   startReviewProgres();
+}
+
+function startReviewProgres() {
+  reviewCounter.textContent = `0 / ${reviewCards.length}`;
 }
 
 startReviewButton.addEventListener("click", () => {
@@ -219,19 +226,22 @@ function showCurrentCard() {
   cardWord.textContent = currentCard.word;
   cardMeaning.textContent = currentCard.meaning;
   cardExample.textContent = currentCard.example;
-  flashcard.classList.remove("flipped");
 }
 
 flashcard.addEventListener("click", () => {
+  const btn = flashcard.closest("button");
+  if (btn) return;
   flashcard.classList.toggle("flipped");
 });
 
 function nextReviewCard() {
   currentCardIndex++;
+
   if (currentCardIndex >= reviewCards.length) {
     showReviewComplete();
     return;
   }
+
   showCurrentCard();
   updateReviewProgress();
 }
@@ -242,6 +252,7 @@ stillLearningButton.addEventListener("click", (e) => {
 
   stillLearningCount++;
 
+  flashcard.classList.remove("flipped");
   updateCardProgress(currentCard, 5);
   nextReviewCard();
 });
@@ -253,20 +264,20 @@ knewItButton.addEventListener("click", (e) => {
 
   knewItCount++;
 
+  flashcard.classList.remove("flipped");
   updateCardProgress(currentCard, 20);
   nextReviewCard();
 });
 
 //end session
 endReviewButton.addEventListener("click", () => {
-  reviewSession.classList.remove("active");
+  showView(homeView);
   isReviewing = false;
   renderCards();
 });
 
 function updateReviewProgress() {
-  const dueCards = getDueCards();
-  const totalCards = dueCards.length;
+  const totalCards = reviewCards.length;
 
   if (totalCards === 0) {
     reviewProgressBar.value = 0;
@@ -274,15 +285,11 @@ function updateReviewProgress() {
     return;
   }
 
-  const current = currentCardIndex;
-  const progress = (current / totalCards) * 100;
+  const completedCards = currentCardIndex;
+  const progress = (completedCards / totalCards) * 100;
 
   reviewProgressBar.value = progress;
-  reviewCounter.textContent = `${current} / ${totalCards}`;
-}
-
-function startReviewProgres() {
-  reviewCounter.textContent = `0 / ${getDueCards().length}`;
+  reviewCounter.textContent = `${completedCards} / ${totalCards}`;
 }
 
 function updateCardProgress(card, amount) {

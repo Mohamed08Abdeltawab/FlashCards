@@ -71,6 +71,7 @@ addWordForm.addEventListener("submit", (e) => {
     example,
     //adding data for reviewing
     level: 1,
+    progress: 0, //for level progress
     nextReview: tomorrow.toISOString(),
   };
   //4
@@ -85,8 +86,6 @@ addWordForm.addEventListener("submit", (e) => {
 function renderCards() {
   decksContainer.innerHTML = "";
 
-  const progressValue = 0;
-
   for (const card of cards) {
     const deck = document.createElement("div");
     const deckInfo = document.createElement("div");
@@ -94,24 +93,24 @@ function renderCards() {
     const small = document.createElement("small");
     const level = document.createElement("div");
     const progress = document.createElement("progress");
-    const level1 = document.createElement("span");
+    const levelName = document.createElement("span");
     const btnDel = document.createElement("button");
 
     h4.textContent = card.word;
     small.textContent = card.example;
 
-    progress.value = progressValue;
-    level1.textContent = `Level ${card.level}`;
+    progress.max = 100;
+    progress.value = card.progress;
+    levelName.textContent = `Level ${card.level}`;
 
     btnDel.textContent = "x";
     btnDel.dataset.wordId = card.id;
-
-    //update review cards based on abilable cards
 
     level.classList.add("level");
     deckInfo.classList.add("deck-info");
     btnDel.classList.add("delete-card");
     btnDel.setAttribute("aria-label", "Delete card");
+    progress.classList.add("level-progress");
 
     deck.classList.add("deck");
 
@@ -119,7 +118,7 @@ function renderCards() {
     deckInfo.append(small);
 
     level.append(progress);
-    level.append(level1);
+    level.append(levelName);
 
     deck.append(deckInfo);
     deck.append(level);
@@ -209,11 +208,18 @@ function nextReviewCard() {
 
 stillLearningButton.addEventListener("click", (e) => {
   e.stopPropagation();
+  const currentCard = reviewCards[currentCardIndex];
+
+  updateCardProgress(currentCard, 5);
   nextReviewCard();
 });
 
 knewItButton.addEventListener("click", (e) => {
   e.stopPropagation();
+
+  const currentCard = reviewCards[currentCardIndex];
+
+  updateCardProgress(currentCard, 20);
   nextReviewCard();
 });
 
@@ -221,6 +227,7 @@ knewItButton.addEventListener("click", (e) => {
 endReviewButton.addEventListener("click", () => {
   reviewSession.classList.remove("active");
   isReviewing = false;
+  renderCards();
 });
 
 function updateReviewProgress() {
@@ -242,4 +249,13 @@ function updateReviewProgress() {
 
 function startReviewProgres() {
   reviewCounter.textContent = `0 / ${getDueCards().length}`;
+}
+
+function updateCardProgress(card, amount) {
+  card.progress += amount;
+
+  if (card.progress >= 100) {
+    card.level++;
+    card.progress = 0;
+  }
 }

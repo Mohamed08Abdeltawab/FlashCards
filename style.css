@@ -4,6 +4,7 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 body {
@@ -600,4 +601,122 @@ progress::-webkit-progress-value {
 }
 .knew-it:hover {
   background-color: green;
+}
+
+/* starting in final status for reviewing */
+
+.review-complete {
+  /* display: none; */
+
+  width: 100%;
+  max-width: 700px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 50px 20px;
+
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.review-complete.active {
+  display: flex;
+}
+
+.review-complete > img {
+  width: 230px;
+  height: 230px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.review-complete h2 {
+  margin: 0 0 10px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.review-complete > p {
+  margin: 0 0 30px;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.review-complete > p span {
+  font-weight: 700;
+}
+
+.recall-percent {
+  color: #00a859;
+}
+
+.session-stats {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.known-stat,
+.learning-stat {
+  flex: 1;
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+  border: 1px solid;
+}
+
+.known-stat {
+  background-color: #dcfce7;
+  border-color: #86efac;
+}
+
+.learning-stat {
+  background-color: #ffe7e7;
+  border-color: #ffb4b4;
+}
+
+.known-stat strong,
+.learning-stat strong {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.known-stat strong {
+  color: #00a859;
+}
+
+.learning-stat strong {
+  color: #ef4b5f;
+}
+
+.known-stat span,
+.learning-stat span {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.back-to-deck {
+  width: 155px;
+  height: 52px;
+
+  margin: 0;
+
+  background-color: #4c5bea;
+  color: white;
+
+  border: none;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.back-to-deck:hover {
+  background-color: #3f4bd1;
 }

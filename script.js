@@ -46,6 +46,11 @@ const cardWord = document.querySelector(".card-word");
 const cardMeaning = document.querySelector(".card-meaning");
 const cardExample = document.querySelector(".card-example");
 
+
+//final card of reviwing 
+let knewItCount = 0;
+let stillLearningCount = 0;
+
 // Application Data
 let cards = [];
 // Review State

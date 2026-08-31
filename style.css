@@ -7,6 +7,26 @@
   margin: 0;
 }
 
+.view {
+  display: none;
+}
+
+.view.active {
+  display: flex;
+}
+
+.view {
+  display: none;
+}
+
+main.view.active {
+  display: block;
+}
+
+section.view.active {
+  display: flex;
+}
+
 body {
   margin: 0;
   padding: 24px;
@@ -21,7 +41,7 @@ body {
   color: #101011;
 }
 
-header,
+.header,
 main {
   width: 100%;
   max-width: 700px;
@@ -32,7 +52,7 @@ main {
    Header
 ========================= */
 
-header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -606,7 +626,7 @@ progress::-webkit-progress-value {
 /* starting in final status for reviewing */
 
 .review-complete {
-  /* display: none; */
+  display: none;
 
   width: 100%;
   max-width: 700px;

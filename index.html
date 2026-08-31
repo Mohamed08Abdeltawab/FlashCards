@@ -10,26 +10,26 @@
   </head>
 
   <body>
-    <header>
-      <section id="left-side-container">
-        <img src="./images/logo.jpg" alt="Smart Flashcards logo" />
+    <main class="view active">
+      <section class="header">
+        <section id="left-side-container">
+          <img src="./images/logo.jpg" alt="Smart Flashcards logo" />
 
-        <div>
-          <h3 id="title">Smart Flashcards</h3>
-          <small>Spaced-repetition vocabulary</small>
-        </div>
+          <div>
+            <h3 id="title">Smart Flashcards</h3>
+            <small>Spaced-repetition vocabulary</small>
+          </div>
+        </section>
+
+        <section id="right-side-container">
+          <div id="status">
+            <img src="./images/streak-icon.png" alt="" />
+            <span id="day-streak">0</span>
+            <span>day streak</span>
+          </div>
+        </section>
       </section>
 
-      <section id="right-side-container">
-        <div id="status">
-          <img src="./images/streak-icon.png" alt="" />
-          <span id="day-streak">0</span>
-          <span>day streak</span>
-        </div>
-      </section>
-    </header>
-
-    <main>
       <section class="status-container">
         <div class="status-details-container">
           <h3 class="word-number due-words">0</h3>
@@ -132,7 +132,7 @@
       </section>
     </main>
 
-    <section class="review-session">
+    <section class="review-session view">
       <div class="review-header">
         <button class="end-review">× End session</button>
         <span class="review-counter">0 / 5</span>
@@ -175,7 +175,7 @@
       </div>
     </section>
 
-    <section class="review-complete">
+    <section class="review-complete view">
       <img src="./images/all-done.png" alt="Session complete" />
 
       <h2>Session complete</h2>

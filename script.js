@@ -1,4 +1,8 @@
 // DOM Elements
+const homeView = document.querySelector("main");
+const reviewView = document.querySelector(".review-session");
+const completeView = document.querySelector(".review-complete");
+
 const addWordForm = document.querySelector(".add-word-form");
 
 const wordInput = document.getElementById("wordInput");
@@ -23,8 +27,6 @@ const masteredWordsElement = document.querySelector(".mastered-words");
 const dayStreakElement = document.querySelector(".streak-words");
 
 // Review DOM Elements
-const reviewSession = document.querySelector(".review-session");
-
 const endReviewButton = document.querySelector(".end-review");
 
 const reviewCounter = document.querySelector(".review-counter");
@@ -46,16 +48,34 @@ const cardWord = document.querySelector(".card-word");
 const cardMeaning = document.querySelector(".card-meaning");
 const cardExample = document.querySelector(".card-example");
 
+//final card of reviwing
+// Review Complete DOM Elements
+const reviewedCount = document.querySelector(".reviewed-count");
 
-//final card of reviwing 
-let knewItCount = 0;
-let stillLearningCount = 0;
+const recallPercent = document.querySelector(".recall-percent");
+
+const knownCount = document.querySelector(".known-count");
+
+const learningCount = document.querySelector(".learning-count");
+
+const backToDeckButton = document.querySelector(".back-to-deck");
 
 // Application Data
 let cards = [];
 // Review State
 let currentCardIndex = 0;
 let isReviewing = false;
+
+let knewItCount = 0;
+let stillLearningCount = 0;
+
+function showView(view) {
+  homeView.classList.remove("active");
+  reviewView.classList.remove("active");
+  completeView.classList.remove("active");
+
+  view.classList.add("active");
+}
 
 addWordForm.addEventListener("submit", (e) => {
   //1
@@ -175,13 +195,16 @@ function getDueCards() {
 }
 
 function startReview() {
+  showView(reviewView);
+  //intialize with 0
+  knewItCount = 0;
+  stillLearningCount = 0;
+
   reviewCards = getDueCards();
   if (reviewCards.length <= 0) return;
 
   currentCardIndex = 0;
   isReviewing = true;
-
-  reviewSession.classList.add("active");
   showCurrentCard();
   startReviewProgres();
 }
@@ -205,8 +228,10 @@ flashcard.addEventListener("click", () => {
 
 function nextReviewCard() {
   currentCardIndex++;
-  if (currentCardIndex >= reviewCards.length) return;
-
+  if (currentCardIndex >= reviewCards.length) {
+    showReviewComplete();
+    return;
+  }
   showCurrentCard();
   updateReviewProgress();
 }
@@ -214,6 +239,8 @@ function nextReviewCard() {
 stillLearningButton.addEventListener("click", (e) => {
   e.stopPropagation();
   const currentCard = reviewCards[currentCardIndex];
+
+  stillLearningCount++;
 
   updateCardProgress(currentCard, 5);
   nextReviewCard();
@@ -223,6 +250,8 @@ knewItButton.addEventListener("click", (e) => {
   e.stopPropagation();
 
   const currentCard = reviewCards[currentCardIndex];
+
+  knewItCount++;
 
   updateCardProgress(currentCard, 20);
   nextReviewCard();
@@ -264,3 +293,24 @@ function updateCardProgress(card, amount) {
     card.progress = 0;
   }
 }
+
+// showReviewComplete
+function showReviewComplete() {
+  showView(completeView);
+  knownCount.textContent = knewItCount;
+  learningCount.textContent = stillLearningCount;
+  reviewProgressBar.value = 0;
+
+  const wordsReviewedCount = knewItCount + stillLearningCount;
+  if (wordsReviewedCount === 0) {
+    return;
+  }
+  const percent = Math.round((knewItCount / wordsReviewedCount) * 100);
+
+  reviewedCount.textContent = wordsReviewedCount;
+  recallPercent.textContent = `${percent}%`;
+}
+
+backToDeckButton.addEventListener("click", () => {
+  showView(homeView);
+});

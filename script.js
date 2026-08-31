@@ -308,10 +308,11 @@ stillLearningButton.addEventListener("click", (e) => {
   e.stopPropagation();
   const currentCard = reviewCards[currentCardIndex];
 
-  stillLearningCount++;
-
-  flashcard.classList.remove("flipped");
   updateCardProgress(currentCard, 5);
+  updateNextReview(currentCard);
+
+  stillLearningCount++;
+  flashcard.classList.remove("flipped");
   nextReviewCard();
 });
 
@@ -320,10 +321,11 @@ knewItButton.addEventListener("click", (e) => {
 
   const currentCard = reviewCards[currentCardIndex];
 
-  knewItCount++;
-
-  flashcard.classList.remove("flipped");
   updateCardProgress(currentCard, 20);
+  updateNextReview(currentCard);
+
+  knewItCount++;
+  flashcard.classList.remove("flipped");
   nextReviewCard();
 });
 
@@ -380,3 +382,12 @@ backToDeckButton.addEventListener("click", () => {
   showView(homeView);
   renderCards();
 });
+
+//next review
+function updateNextReview(card) {
+  const nextReview = new Date();
+
+  nextReview.setMinutes(nextReview.getMinutes() + 10);
+
+  card.nextReview = nextReview.toISOString();
+}

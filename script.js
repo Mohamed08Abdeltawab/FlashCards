@@ -128,16 +128,18 @@ let db;
 const request = window.indexedDB.open("FlashCards", 1);
 
 request.onupgradeneeded = function (e) {
-  db = e.target.result; //get db
-  const store = db.creatObjectStore("Cards", {
+  db = e.target.result;
+  const store = db.createObjectStore("cards", {
     keyPath: "id",
   });
   store.createIndex("word", "word", { unique: false });
+
+  seedCards.forEach((card) => store.add(card));
 };
 
 request.onsuccess = function (e) {
   db = e.target.result;
-  console.log("Database opened successfully");
+  renderCards();
 };
 
 request.onerror = function (e) {
@@ -208,8 +210,6 @@ function updateCard(card) {
   });
 }
 
-
-
 //delete card
 
 // Delete card
@@ -229,13 +229,6 @@ function deleteCard(id) {
   });
 }
 
-
-
-
-
-
-renderCards();
-
 function showView(view) {
   homeView.classList.remove("active");
   reviewView.classList.remove("active");
@@ -244,7 +237,7 @@ function showView(view) {
   view.classList.add("active");
 }
 
-addWordForm.addEventListener("submit", (e) => {
+addWordForm.addEventListener("submit", async (e) => {
   //1
   e.preventDefault();
 
@@ -270,21 +263,19 @@ addWordForm.addEventListener("submit", (e) => {
   };
   //4
   // cards.push(wordCard);
-  addWord(wordCard);
+
   wordInput.value = "";
   meaningInput.value = "";
   exampleInput.value = "";
-
-  renderCards();
+  await addWord(wordCard);
+  await renderCards();
 });
 
 async function renderCards() {
   decksContainer.innerHTML = "";
+
   cards = await getCards();
-  if(cards.length === 0){
-    //show message error
-    return
-  }
+
   for (const card of cards) {
     const deck = document.createElement("div");
     const deckInfo = document.createElement("div");
@@ -304,8 +295,6 @@ async function renderCards() {
 
     btnDel.textContent = "x";
     btnDel.dataset.wordId = card.id;
-
-    reviewProgressBar.value = 0;
 
     level.classList.add("level");
     deckInfo.classList.add("deck-info");
@@ -327,6 +316,7 @@ async function renderCards() {
 
     decksContainer.append(deck);
   }
+
   updateStatistics();
   updateReviewState();
   dueWordsElement.textContent = getDueCards().length;
@@ -350,7 +340,7 @@ function updateReviewState() {
   }
 }
 
-decksContainer.addEventListener("click", (e) => {
+decksContainer.addEventListener("click", async (e) => {
   const btnDel = e.target.closest(".delete-card");
   if (!btnDel) return;
 
@@ -358,8 +348,9 @@ decksContainer.addEventListener("click", (e) => {
   //   const index = cards.findIndex((w) => w.id === wordId);
   //   if (index === -1) return;
   //   cards.splice(index, 1);
-  cards = cards.filter((card) => card.id !== wordId);
-  renderCards();
+  // cards = cards.filter((card) => card.id !== wordId);
+  await deleteCard(wordId);
+  await renderCards();
 });
 
 function getDueCards() {
@@ -371,7 +362,6 @@ function getDueCards() {
 }
 
 function startReview() {
-  //intialize with 0
   knewItCount = 0;
   stillLearningCount = 0;
 
@@ -382,11 +372,7 @@ function startReview() {
   currentCardIndex = 0;
   isReviewing = true;
   showCurrentCard();
-  startReviewProgres();
-}
-
-function startReviewProgres() {
-  reviewCounter.textContent = `0 / ${reviewCards.length}`;
+  updateReviewProgress();
 }
 
 startReviewButton.addEventListener("click", () => {
@@ -421,31 +407,44 @@ function nextReviewCard() {
   updateReviewProgress();
 }
 
+let isProcessingAnswer = false;
+
 stillLearningButton.addEventListener("click", async (e) => {
   e.stopPropagation();
-  const currentCard = reviewCards[currentCardIndex];
+  if (isProcessingAnswer) return;
+  isProcessingAnswer = true;
 
-  updateCardProgress(currentCard, 5);
-  updateNextReview(currentCard);
+  try {
+    const currentCard = reviewCards[currentCardIndex];
+    updateCardProgress(currentCard, 5);
+    updateNextReview(currentCard);
 
-  stillLearningCount++;
-  flashcard.classList.remove("flipped");
-  await updateCard(currentCard);
-  nextReviewCard();
+    stillLearningCount++;
+    flashcard.classList.remove("flipped");
+    await updateCard(currentCard);
+    nextReviewCard();
+  } finally {
+    isProcessingAnswer = false;
+  }
 });
 
 knewItButton.addEventListener("click", async (e) => {
   e.stopPropagation();
+  if (isProcessingAnswer) return;
+  isProcessingAnswer = true;
 
-  const currentCard = reviewCards[currentCardIndex];
+  try {
+    const currentCard = reviewCards[currentCardIndex];
+    updateCardProgress(currentCard, 20);
+    updateNextReview(currentCard);
 
-  updateCardProgress(currentCard, 20);
-  updateNextReview(currentCard);
-
-  knewItCount++;
-  flashcard.classList.remove("flipped");
-  await updateCard(currentCard);
-  nextReviewCard();
+    knewItCount++;
+    flashcard.classList.remove("flipped");
+    await updateCard(currentCard);
+    nextReviewCard();
+  } finally {
+    isProcessingAnswer = false;
+  }
 });
 
 //end session

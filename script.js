@@ -151,6 +151,48 @@ function tx(objectStoreName, mode) {
   return store;
 }
 
+//first crud
+//add word -> word is about card
+function addWord(card) {
+  //update cards.push
+  //get tx
+  const store = tx("cards", "readwrite");
+
+  //create request
+  const addRequest = store.add(card);
+
+  //check onsuccess
+  addRequest.onsuccess = function () {
+    //success message
+  };
+
+  addRequest.onerror = function () {
+    //error message
+  };
+}
+
+//get all cards
+function getCards() {
+  return new Promise((resolve, reject) => {
+    const store = tx("cards", "readonly");
+
+    //create request
+    const readRequest = store.getAll();
+
+    //check onsuccess
+    readRequest.onsuccess = function () {
+      //success message
+      cards = readRequest.result;
+      resolve(cards);
+    };
+
+    readRequest.onerror = function () {
+      //error message
+      reject(readRequest.error);
+    };
+  });
+}
+
 renderCards();
 
 function showView(view) {
@@ -186,7 +228,8 @@ addWordForm.addEventListener("submit", (e) => {
     nextReview: nextReview.toISOString(),
   };
   //4
-  cards.push(wordCard);
+  // cards.push(wordCard);
+  addWord(wordCard);
   wordInput.value = "";
   meaningInput.value = "";
   exampleInput.value = "";

@@ -25,6 +25,7 @@ const dueWordsElement = document.querySelector(".due-words");
 const totalWordsElement = document.querySelector(".total-words");
 const masteredWordsElement = document.querySelector(".mastered-words");
 const dayStreakElement = document.querySelector(".streak-words");
+const streakCounter = document.getElementById("day-streak");
 
 // Review DOM Elements
 const endReviewButton = document.querySelector(".end-review");
@@ -332,6 +333,11 @@ function updateStatistics() {
   // Update mastered words count
   const masteredCards = getMasteredCards();
   masteredWordsElement.textContent = masteredCards.length;
+
+  // Update day streak
+  const streak = calculateDayStreak();
+  dayStreakElement.textContent = streak;
+  streakCounter.textContent = streak;
 }
 
 //herper function to control in show and hide cards
@@ -368,6 +374,52 @@ function getDueCards() {
 function getMasteredCards() {
   const masteredCards = cards.filter((card) => card.level >= 2);
   return masteredCards;
+}
+
+// Calculate day streak
+function calculateDayStreak() {
+  const streak = JSON.parse(localStorage.getItem("dayStreak")) || {
+    count: 0,
+    lastReviewDate: null,
+  };
+  return streak.count;
+}
+
+// Update day streak after review
+function updateDayStreak() {
+  const today = new Date().toDateString();
+  const streak = JSON.parse(localStorage.getItem("dayStreak")) || {
+    count: 0,
+    lastReviewDate: null,
+  };
+
+  // If already reviewed today, don't increment
+  if (streak.lastReviewDate === today) {
+    return;
+  }
+
+  const lastReviewDate = streak.lastReviewDate
+    ? new Date(streak.lastReviewDate)
+    : null;
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  // Check if last review was yesterday (continue streak)
+  if (
+    lastReviewDate &&
+    lastReviewDate.toDateString() === yesterday.toDateString()
+  ) {
+    streak.count++;
+  } else if (!lastReviewDate) {
+    // First review
+    streak.count = 1;
+  } else {
+    // Streak broken, start new one
+    streak.count = 1;
+  }
+
+  streak.lastReviewDate = today;
+  localStorage.setItem("dayStreak", JSON.stringify(streak));
 }
 
 function startReview() {
@@ -504,6 +556,9 @@ function showReviewComplete() {
 
   reviewedCount.textContent = wordsReviewedCount;
   recallPercent.textContent = `${percent}%`;
+
+  // Update day streak
+  updateDayStreak();
 }
 
 backToDeckButton.addEventListener("click", async () => {

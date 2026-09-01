@@ -479,6 +479,26 @@ flashcard.addEventListener("click", (e) => {
   flashcard.classList.toggle("flipped");
 });
 
+// Listen button functionality - Text to Speech
+listenButton.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  const currentCard = reviewCards[currentCardIndex];
+  if (!currentCard) return;
+
+  // Stop any ongoing speech
+  speechSynthesis.cancel();
+
+  // Create and configure speech
+  const utterance = new SpeechSynthesisUtterance(currentCard.word);
+  utterance.rate = 0.8;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  // Speak
+  speechSynthesis.speak(utterance);
+});
+
 function nextReviewCard() {
   currentCardIndex++;
 
@@ -595,7 +615,7 @@ backToDeckButton.addEventListener("click", async () => {
 function updateNextReview(card) {
   const nextReview = new Date();
 
-  nextReview.setMinutes(nextReview.getMinutes() + 10);
+  nextReview.setMinutes(nextReview.getMinutes() + 1); //change the time to 10 minute for testing purposes
 
   card.nextReview = nextReview.toISOString();
 }

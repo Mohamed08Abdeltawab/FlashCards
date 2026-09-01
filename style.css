@@ -664,7 +664,7 @@ progress::-webkit-progress-value {
   display: flex;
 }
 
-.review-complete>img {
+.review-complete > img {
   width: 230px;
   height: 230px;
   object-fit: contain;
@@ -677,13 +677,13 @@ progress::-webkit-progress-value {
   font-weight: 700;
 }
 
-.review-complete>p {
+.review-complete > p {
   margin: 0 0 30px;
   font-size: 16px;
   color: #6b7280;
 }
 
-.review-complete>p span {
+.review-complete > p span {
   font-weight: 700;
 }
 
@@ -760,4 +760,46 @@ progress::-webkit-progress-value {
 
 .back-to-deck:hover {
   background-color: #3f4bd1;
+}
+
+/* =========================
+   Status Message
+========================= */
+
+.status-message {
+  width: 100%;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  text-align: center;
+  display: none;
+  animation: slide-in 0.3s ease;
+}
+
+.status-message.show {
+  display: block;
+}
+
+.status-message.success {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.status-message.error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

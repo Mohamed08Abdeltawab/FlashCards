@@ -23,7 +23,8 @@
 
         <section id="right-side-container">
           <div id="status">
-            <span id="day-streak">🔥0</span>
+            <span>🔥</span>
+            <span id="day-streak">0</span>
             <span>day streak</span>
           </div>
         </section>
@@ -92,6 +93,7 @@
             id="meaningInput"
             type="text"
             placeholder="Translation or meaning"
+            required
           />
 
           <input
@@ -103,6 +105,8 @@
 
         <button class="global-btn" type="submit">+ Add word</button>
       </form>
+
+      <div id="status-message" class="status-message"></div>
 
       <h3 class="header-add-word">
         YOUR DECK (<span class="num-words">0</span>)

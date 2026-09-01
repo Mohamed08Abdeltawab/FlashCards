@@ -27,6 +27,8 @@ const masteredWordsElement = document.querySelector(".mastered-words");
 const dayStreakElement = document.querySelector(".streak-words");
 const streakCounter = document.getElementById("day-streak");
 
+const statusMessage = document.getElementById("status-message");
+
 // Review DOM Elements
 const endReviewButton = document.querySelector(".end-review");
 
@@ -253,6 +255,11 @@ addWordForm.addEventListener("submit", async (e) => {
   const meaning = meaningInput.value.trim();
   const example = exampleInput.value.trim();
 
+  if (!word || !meaning) {
+    showStatusMessage("✗ Please fill in word and meaning!", "error");
+    return;
+  }
+
   //3
   const nextReview = new Date();
 
@@ -270,13 +277,20 @@ addWordForm.addEventListener("submit", async (e) => {
   };
   //4
   // cards.push(wordCard);
-  await addWord(wordCard);
-  await getCards();
-  renderCards();
+  try {
+    await addWord(wordCard);
+    await getCards();
+    renderCards();
 
-  wordInput.value = "";
-  meaningInput.value = "";
-  exampleInput.value = "";
+    wordInput.value = "";
+    meaningInput.value = "";
+    exampleInput.value = "";
+
+    showStatusMessage(`✓ "${word}" added successfully!`, "success");
+  } catch (error) {
+    showStatusMessage("✗ Error adding word. Please try again!", "error");
+    console.error(error);
+  }
 });
 
 function renderCards() {
@@ -356,10 +370,16 @@ decksContainer.addEventListener("click", async (e) => {
 
   const wordId = Number(btnDel.dataset.wordId);
 
-  await deleteCard(wordId);
-  await getCards();
+  try {
+    await deleteCard(wordId);
+    await getCards();
 
-  renderCards();
+    renderCards();
+    showStatusMessage("✓ Word deleted successfully!", "success");
+  } catch (error) {
+    showStatusMessage("✗ Error deleting word. Please try again!", "error");
+    console.error(error);
+  }
 });
 
 function getDueCards() {
@@ -427,7 +447,10 @@ function startReview() {
   stillLearningCount = 0;
 
   reviewCards = getDueCards();
-  if (reviewCards.length <= 0) return;
+  if (reviewCards.length <= 0) {
+    showStatusMessage("✗ No words available for review right now!", "error");
+    return;
+  }
 
   showView(reviewView);
   currentCardIndex = 0;
@@ -575,4 +598,15 @@ function updateNextReview(card) {
   nextReview.setMinutes(nextReview.getMinutes() + 10);
 
   card.nextReview = nextReview.toISOString();
+}
+
+// Show status message (success or error)
+function showStatusMessage(message, type = "success") {
+  statusMessage.textContent = message;
+  statusMessage.className = `status-message show ${type}`;
+
+  // Auto hide after 3 seconds
+  setTimeout(() => {
+    statusMessage.classList.remove("show");
+  }, 3000);
 }

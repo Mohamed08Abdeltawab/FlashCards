@@ -309,7 +309,7 @@ function renderCards() {
     h4.textContent = card.word;
     small.textContent = card.example;
 
-    progress.max = 100;
+    progress.max = 40;
     progress.value = card.progress;
 
     levelName.textContent = `Level ${card.level}`;
@@ -578,7 +578,7 @@ function updateReviewProgress() {
 function updateCardProgress(card, amount) {
   card.progress += amount;
 
-  if (card.progress >= 100) {
+  if (card.progress >= 40) {
     card.level++;
     card.progress = 0;
   }
@@ -615,7 +615,7 @@ backToDeckButton.addEventListener("click", async () => {
 function updateNextReview(card) {
   const nextReview = new Date();
 
-  nextReview.setMinutes(nextReview.getMinutes() + 1); //change the time to 10 minute for testing purposes
+  nextReview.setSeconds(nextReview.getSeconds() + 100); //change the time to 10 seconds for testing purposes
 
   card.nextReview = nextReview.toISOString();
 }

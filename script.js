@@ -323,6 +323,7 @@ function renderCards() {
     deckInfo.classList.add("deck-info");
     progress.classList.add("level-progress");
     deck.classList.add("deck");
+    h4.classList.add("word-deck");
 
     deckInfo.append(h4, small);
     level.append(progress, levelName);

@@ -309,7 +309,7 @@ function renderCards() {
     h4.textContent = card.word;
     small.textContent = card.example;
 
-    progress.max = 40;
+    progress.max = 100;
     progress.value = card.progress;
 
     levelName.textContent = `Level ${card.level}`;
@@ -615,7 +615,7 @@ backToDeckButton.addEventListener("click", async () => {
 function updateNextReview(card) {
   const nextReview = new Date();
 
-  nextReview.setSeconds(nextReview.getSeconds() + 100); //change the time to 10 seconds for testing purposes
+  nextReview.setMinutes(nextReview.getMinutes() + 5); //change the time to 10 seconds for testing purposes
 
   card.nextReview = nextReview.toISOString();
 }

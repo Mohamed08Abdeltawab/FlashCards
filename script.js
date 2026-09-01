@@ -154,21 +154,19 @@ function tx(objectStoreName, mode) {
 //first crud
 //add word -> word is about card
 function addWord(card) {
-  //update cards.push
-  //get tx
-  const store = tx("cards", "readwrite");
+  return new Promise((resolve, reject) => {
+    const store = tx("cards", "readwrite");
 
-  //create request
-  const addRequest = store.add(card);
+    const request = store.add(card);
 
-  //check onsuccess
-  addRequest.onsuccess = function () {
-    //success message
-  };
+    request.onsuccess = function () {
+      resolve();
+    };
 
-  addRequest.onerror = function () {
-    //error message
-  };
+    request.onerror = function () {
+      reject(request.error);
+    };
+  });
 }
 
 //get all cards
@@ -192,6 +190,49 @@ function getCards() {
     };
   });
 }
+
+//updateCard
+function updateCard(card) {
+  return new Promise((resolve, reject) => {
+    const store = tx("cards", "readwrite");
+
+    const request = store.put(card);
+
+    request.onsuccess = function () {
+      resolve();
+    };
+
+    request.onerror = function () {
+      reject(request.error);
+    };
+  });
+}
+
+
+
+//delete card
+
+// Delete card
+function deleteCard(id) {
+  return new Promise((resolve, reject) => {
+    const store = tx("cards", "readwrite");
+
+    const request = store.delete(id);
+
+    request.onsuccess = function () {
+      resolve();
+    };
+
+    request.onerror = function () {
+      reject(request.error);
+    };
+  });
+}
+
+
+
+
+
 
 renderCards();
 
@@ -237,9 +278,13 @@ addWordForm.addEventListener("submit", (e) => {
   renderCards();
 });
 
-function renderCards() {
+async function renderCards() {
   decksContainer.innerHTML = "";
-
+  cards = await getCards();
+  if(cards.length === 0){
+    //show message error
+    return
+  }
   for (const card of cards) {
     const deck = document.createElement("div");
     const deckInfo = document.createElement("div");
@@ -376,7 +421,7 @@ function nextReviewCard() {
   updateReviewProgress();
 }
 
-stillLearningButton.addEventListener("click", (e) => {
+stillLearningButton.addEventListener("click", async (e) => {
   e.stopPropagation();
   const currentCard = reviewCards[currentCardIndex];
 
@@ -385,10 +430,11 @@ stillLearningButton.addEventListener("click", (e) => {
 
   stillLearningCount++;
   flashcard.classList.remove("flipped");
+  await updateCard(currentCard);
   nextReviewCard();
 });
 
-knewItButton.addEventListener("click", (e) => {
+knewItButton.addEventListener("click", async (e) => {
   e.stopPropagation();
 
   const currentCard = reviewCards[currentCardIndex];
@@ -398,6 +444,7 @@ knewItButton.addEventListener("click", (e) => {
 
   knewItCount++;
   flashcard.classList.remove("flipped");
+  await updateCard(currentCard);
   nextReviewCard();
 });
 

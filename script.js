@@ -122,6 +122,35 @@ let isReviewing = false;
 let knewItCount = 0;
 let stillLearningCount = 0;
 
+//creating database
+let db;
+
+const request = window.indexedDB.open("FlashCards", 1);
+
+request.onupgradeneeded = function (e) {
+  db = e.target.result; //get db
+  const store = db.creatObjectStore("Cards", {
+    keyPath: "id",
+  });
+  store.createIndex("word", "word", { unique: false });
+};
+
+request.onsuccess = function (e) {
+  db = e.target.result;
+  console.log("Database opened successfully");
+};
+
+request.onerror = function (e) {
+  console.error("Database error:", e.target.error);
+};
+
+function tx(objectStoreName, mode) {
+  const transaction = db.transaction([objectStoreName], mode);
+  const store = transaction.objectStore(objectStoreName);
+
+  return store;
+}
+
 renderCards();
 
 function showView(view) {

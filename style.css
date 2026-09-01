@@ -139,6 +139,11 @@ main {
   font-weight: bolder;
 }
 
+.found-word-review .num-words {
+  color: #2563eb;
+  font-size: 1.1em;
+}
+
 .due-words {
   color: blue;
 }

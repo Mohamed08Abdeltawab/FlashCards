@@ -357,10 +357,17 @@ function updateStatistics() {
 
 //herper function to control in show and hide cards
 function updateReviewState() {
-  if (cards.length > 0) {
-    reviewContainer.classList.add("has-words");
-  } else {
-    reviewContainer.classList.remove("has-words");
+  const dueCardsCount = getDueCards().length;
+  const hasDueCards = dueCardsCount > 0;
+
+  reviewContainer.classList.toggle("has-words", hasDueCards);
+
+  const readyReviewCount = document.querySelector(
+    ".found-word-review .num-words",
+  );
+
+  if (readyReviewCount) {
+    readyReviewCount.textContent = dueCardsCount;
   }
 }
 

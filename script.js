@@ -113,7 +113,7 @@ const seedCards = [
   },
 ];
 
-let cards = [...seedCards];
+let cards = [];
 // Review State
 let reviewCards = [];
 let currentCardIndex = 0;
@@ -137,9 +137,10 @@ request.onupgradeneeded = function (e) {
   seedCards.forEach((card) => store.add(card));
 };
 
-request.onsuccess = function (e) {
+request.onsuccess = async function (e) {
   db = e.target.result;
-  renderCards();
+
+  await loadCards();
 };
 
 request.onerror = function (e) {
@@ -151,6 +152,11 @@ function tx(objectStoreName, mode) {
   const store = transaction.objectStore(objectStoreName);
 
   return store;
+}
+
+async function loadCards() {
+  await getCards();
+  renderCards();
 }
 
 //first crud
@@ -249,7 +255,7 @@ addWordForm.addEventListener("submit", async (e) => {
   //3
   const nextReview = new Date();
 
-  nextReview.setMinutes(nextReview.getMinutes() + 10);
+  nextReview.setMinutes(nextReview.getMinutes() - 15);
 
   const wordCard = {
     id: Date.now(),
@@ -263,18 +269,17 @@ addWordForm.addEventListener("submit", async (e) => {
   };
   //4
   // cards.push(wordCard);
+  await addWord(wordCard);
+  await getCards();
+  renderCards();
 
   wordInput.value = "";
   meaningInput.value = "";
   exampleInput.value = "";
-  await addWord(wordCard);
-  await renderCards();
 });
 
-async function renderCards() {
+function renderCards() {
   decksContainer.innerHTML = "";
-
-  cards = await getCards();
 
   for (const card of cards) {
     const deck = document.createElement("div");
@@ -291,28 +296,22 @@ async function renderCards() {
 
     progress.max = 100;
     progress.value = card.progress;
+
     levelName.textContent = `Level ${card.level}`;
 
-    btnDel.textContent = "x";
+    btnDel.textContent = "×";
     btnDel.dataset.wordId = card.id;
+    btnDel.classList.add("delete-card");
+    btnDel.setAttribute("aria-label", "Delete card");
 
     level.classList.add("level");
     deckInfo.classList.add("deck-info");
-    btnDel.classList.add("delete-card");
-    btnDel.setAttribute("aria-label", "Delete card");
     progress.classList.add("level-progress");
-
     deck.classList.add("deck");
 
-    deckInfo.append(h4);
-    deckInfo.append(small);
-
-    level.append(progress);
-    level.append(levelName);
-
-    deck.append(deckInfo);
-    deck.append(level);
-    deck.append(btnDel);
+    deckInfo.append(h4, small);
+    level.append(progress, levelName);
+    deck.append(deckInfo, level, btnDel);
 
     decksContainer.append(deck);
   }
@@ -329,6 +328,10 @@ function updateStatistics() {
   numWordsElements.forEach((w) => {
     w.textContent = numWords;
   });
+
+  // Update mastered words count
+  const masteredCards = getMasteredCards();
+  masteredWordsElement.textContent = masteredCards.length;
 }
 
 //herper function to control in show and hide cards
@@ -342,15 +345,15 @@ function updateReviewState() {
 
 decksContainer.addEventListener("click", async (e) => {
   const btnDel = e.target.closest(".delete-card");
+
   if (!btnDel) return;
 
   const wordId = Number(btnDel.dataset.wordId);
-  //   const index = cards.findIndex((w) => w.id === wordId);
-  //   if (index === -1) return;
-  //   cards.splice(index, 1);
-  // cards = cards.filter((card) => card.id !== wordId);
+
   await deleteCard(wordId);
-  await renderCards();
+  await getCards();
+
+  renderCards();
 });
 
 function getDueCards() {
@@ -359,6 +362,12 @@ function getDueCards() {
   );
 
   return dueCards;
+}
+
+// Get mastered cards (level >= 2)
+function getMasteredCards() {
+  const masteredCards = cards.filter((card) => card.level >= 2);
+  return masteredCards;
 }
 
 function startReview() {
@@ -448,10 +457,11 @@ knewItButton.addEventListener("click", async (e) => {
 });
 
 //end session
-endReviewButton.addEventListener("click", () => {
+endReviewButton.addEventListener("click", async () => {
   showView(homeView);
   isReviewing = false;
-  renderCards();
+
+  await loadCards();
 });
 
 function updateReviewProgress() {
@@ -496,9 +506,11 @@ function showReviewComplete() {
   recallPercent.textContent = `${percent}%`;
 }
 
-backToDeckButton.addEventListener("click", () => {
+backToDeckButton.addEventListener("click", async () => {
   showView(homeView);
-  renderCards();
+  isReviewing = false;
+
+  await loadCards();
 });
 
 //next review
